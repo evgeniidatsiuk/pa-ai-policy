@@ -281,30 +281,55 @@
   <h2><span class="num">01</span> Core Principles</h2>
   <p class="section-sub">Every specific rule below derives from one of these. When a situation isn't covered, reason from here.</p>
 
+  <h3>Why we use AI at all</h3>
+  <p>We use AI to speed up routine, data-heavy work and to amplify what people can do. AI is a tool: it doesn't remove responsibility, and it never makes the final decision instead of a person.</p>
+
+  <h3>Assess the risk first</h3>
+  <p>Before we build or ship anything that uses AI, we define what harm it could cause if things go wrong. The higher the risk, the more carefully we handle it — we don't skip steps just because we're under pressure.</p>
+  <div class="levels">
+    <div class="level"><span class="badge lv-pub">LOW</span><p>Internal helpers, drafts, and tools that don't affect clients or money.</p></div>
+    <div class="level"><span class="badge lv-con">MEDIUM</span><p>Features clients see, and that influence their decisions.</p></div>
+    <div class="level"><span class="badge lv-res">HIGH</span><p>Anything that touches money, safety, legal rights, large volumes of personal data, or can affect many people at once.</p></div>
+  </div>
+
+  <h3>Rules we never bend</h3>
   <div class="principle"><div class="n">1</div><div>
-    <h3>Human accountability</h3>
-    <p>AI assists; a person decides and signs off. Whoever ships the output owns it — code, content, or analysis. "The model produced it" is never an explanation for a defect.</p>
+    <h3>Responsibility stays with people</h3>
+    <p>A person with the right knowledge and authority makes the final call and signs off. Whoever ships the system is accountable for the results — including what happens next.</p>
   </div></div>
   <div class="principle"><div class="n">2</div><div>
-    <h3>Verify, then trust</h3>
-    <p>Treat output as a fast draft from a fallible collaborator: run the code, check the facts, confirm the sources and that suggested APIs and packages actually exist.</p>
+    <h3>Verify first, then trust</h3>
+    <p>We don't take AI output on faith. Code is run and reviewed, facts are checked, and packages and sources are confirmed to exist. On medium and high risk we also test how the system behaves in unusual and adversarial conditions.</p>
   </div></div>
   <div class="principle"><div class="n">3</div><div>
-    <h3>Data protection is the hard boundary</h3>
-    <p>Client, personal, and confidential data only ever go to tools explicitly approved for that data class. This is the rule we don't bend.</p>
+    <h3>Data protection is the hard line</h3>
+    <p>The one rule we never bend. Personal data, client secrets, and our own confidential information are protected by default: we collect only what's actually needed, use it only for the stated purpose, and never send sensitive data to tools that can't guarantee the same level of protection.</p>
   </div></div>
   <div class="principle"><div class="n">4</div><div>
-    <h3>Least privilege for AI tooling</h3>
-    <p>Scope what agents can read, run, and reach. Deny access to secrets by default; grant capabilities deliberately, not blanket-allow.</p>
+    <h3>AI gets the minimum privileges necessary</h3>
+    <p>Secrets and powerful capabilities are closed by default. Access is opened deliberately, temporarily, and only for the specific task. Agents and tools run with the smallest set of permissions possible.</p>
   </div></div>
   <div class="principle"><div class="n">5</div><div>
-    <h3>Same bar as human work</h3>
-    <p>AI-generated code gets the same review, tests, and security scanning as anything else — arguably more, because its failure modes are subtler.</p>
+    <h3>The same (or higher) bar as human work</h3>
+    <p>Code, text, analysis, or decisions produced by AI go through the same reviews, tests, and security checks as if a person wrote them. On high risk the bar is higher — and after release we keep watching how the system behaves.</p>
   </div></div>
   <div class="principle"><div class="n">6</div><div>
-    <h3>Transparency</h3>
-    <p>Be honest about AI's role — internally, and with clients where contracts require it. Don't present unverified output as expert human judgment.</p>
+    <h3>We stay honest about AI's role</h3>
+    <p>Inside the team and with clients, we say clearly where AI was used, what exactly it did, and what its known limitations are. Where it matters, we keep records so we can later understand why a particular decision was made.</p>
   </div></div>
+
+  <h3>How we put this into practice</h3>
+  <ul class="clean">
+    <li><strong>The maker owns it.</strong> The person who creates the work is responsible for its quality and for following these rules.</li>
+    <li><strong>The reviewer shares it.</strong> Whoever reviews and approves the work shares responsibility for it.</li>
+    <li><strong>Confirm project rules.</strong> Project-specific rules — especially client and Restricted data — are confirmed with the project lead.</li>
+    <li><strong>When in doubt, ask</strong> before using AI.</li>
+    <li><strong>Report incidents quickly</strong> to the lead. This is not about blame.</li>
+  </ul>
+  <div class="callout rule">
+    <span class="label">Keep it light</span>
+    <p>These principles are meant to guide everyday decisions, not to create heavy process.</p>
+  </div>
 </div></section>
 
 <hr class="divider" />
