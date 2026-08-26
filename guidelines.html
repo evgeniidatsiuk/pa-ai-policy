@@ -223,10 +223,10 @@
     <nav class="topnav">
       <a href="#principles">Principles</a>
       <a href="#data">Sensitive Data</a>
+      <a href="#tools">Tools</a>
       <a href="#hooks">Guardrails</a>
       <a href="#developers">Developers</a>
       <a href="#incident">Leak Runbook</a>
-      <a href="#tools">Tools</a>
       <a href="#onboarding">Onboarding</a>
     </nav>
   </div>
@@ -248,10 +248,10 @@
       <li><a href="#principles">Core Principles</a></li>
       <li><a href="#everyday">Working With AI Day-to-Day</a></li>
       <li><a href="#data">Sensitive Data: Classify &amp; Handle</a></li>
+      <li><a href="#tools">Recommended &amp; Restricted Tools</a></li>
       <li><a href="#hooks">Guardrails With Claude Code Hooks</a></li>
       <li><a href="#developers">Developer Practices</a></li>
       <li><a href="#incident">Runbook: Leaked Secrets &amp; Rotation</a></li>
-      <li><a href="#tools">Recommended &amp; Restricted Tools</a></li>
       <li><a href="#legal">Legal, IP &amp; Client Work</a></li>
       <li><a href="#onboarding">Onboarding Checklist</a></li>
     </ol>
@@ -365,9 +365,34 @@
 
 <hr class="divider" />
 
-<!-- 04 HOOKS / GUARDRAILS -->
+<!-- 04 TOOLS -->
+<section id="tools"><div class="wrap">
+  <h2><span class="num">04</span> Recommended &amp; Restricted Tools</h2>
+  <p class="section-sub">Our stance on categories. The maintained, named approved-tool list lives with AI Enablement.</p>
+  <div class="table-wrap">
+    <table>
+      <thead><tr><th>Category</th><th>Examples</th><th>Status</th><th>Condition</th></tr></thead>
+      <tbody>
+        <tr><td><b>Coding assistants (business tier)</b></td><td>Claude / Claude Code, GitHub Copilot, Cursor</td><td><span class="tag tag-ok">Recommended</span></td><td>Org account, training off, deny-list + hooks configured.</td></tr>
+        <tr><td><b>Chat assistants (business/enterprise)</b></td><td>Claude Team/Enterprise, ChatGPT Team, Gemini for Workspace</td><td><span class="tag tag-ok">Recommended</span></td><td>No-training + retention controls for Internal &amp; above.</td></tr>
+        <tr><td><b>Free consumer tiers</b></td><td>Free chatbots, browser AI add-ons</td><td><span class="tag tag-warn">Caution</span></td><td>Public data only. May train on inputs.</td></tr>
+        <tr><td><b>Autonomous agents / broad access</b></td><td>Agents that run commands, edit files, reach prod</td><td><span class="tag tag-warn">Caution</span></td><td>Least privilege, human in loop, never unattended on prod.</td></tr>
+        <tr><td><b>Unvetted tools &amp; plugins</b></td><td>Unknown extensions, "free GPT" sites, MCP servers of unknown origin</td><td><span class="tag tag-no">Avoid</span></td><td>No DPA, unclear data handling, supply-chain risk.</td></tr>
+        <tr><td><b>Any tool on Restricted data</b></td><td>—</td><td><span class="tag tag-no">Blocked</span></td><td>Unless the client approved that specific tool in writing.</td></tr>
+      </tbody>
+    </table>
+  </div>
+  <div class="callout rule">
+    <span class="label">Adding a tool</span>
+    <p>Found something useful that isn't approved? Don't feed it client data first. Raise it with AI Enablement to vet security, licensing, and data handling — then it's added to the list for everyone. Same due diligence applies to MCP servers and agent integrations.</p>
+  </div>
+</div></section>
+
+<hr class="divider" />
+
+<!-- 05 HOOKS / GUARDRAILS -->
 <section id="hooks"><div class="wrap">
-  <h2><span class="num">04</span> Guardrails With Claude Code Hooks</h2>
+  <h2><span class="num">05</span> Guardrails With Claude Code Hooks</h2>
   <p class="section-sub">Don't rely on discipline alone. Make the safe path the default by enforcing it in tooling. Two layers: permissions (declarative) and hooks (programmable).</p>
 
   <h3>Layer 1 — deny access to secrets declaratively</h3>
@@ -431,9 +456,9 @@ cmd=$(echo <span class="str">"$input"</span> | jq -r <span class="str">'.tool_in
 
 <hr class="divider" />
 
-<!-- 05 DEVELOPERS -->
+<!-- 06 DEVELOPERS -->
 <section id="developers"><div class="wrap">
-  <h2><span class="num">05</span> Developer Practices</h2>
+  <h2><span class="num">06</span> Developer Practices</h2>
   <p class="section-sub">Coding with assistants like Claude Code, Copilot, and Cursor.</p>
   <div class="callout rule">
     <span class="label">Core stance</span>
@@ -475,9 +500,9 @@ cmd=$(echo <span class="str">"$input"</span> | jq -r <span class="str">'.tool_in
 
 <hr class="divider" />
 
-<!-- 06 INCIDENT RUNBOOK -->
+<!-- 07 INCIDENT RUNBOOK -->
 <section id="incident"><div class="wrap">
-  <h2><span class="num">06</span> Runbook: Leaked Secrets &amp; Rotation</h2>
+  <h2><span class="num">07</span> Runbook: Leaked Secrets &amp; Rotation</h2>
   <p class="section-sub">A key ended up in a commit, a log, a prompt, or a screenshot. Here's exactly what to do — in order.</p>
 
   <div class="callout danger">
@@ -522,38 +547,13 @@ git push --force --all</code></pre>
     </div></div>
     <div class="step"><div>
       <h4>Prevent recurrence</h4>
-      <p>Close the gap that let it happen: add the file to <code>.gitignore</code>, enable the pre-commit secret scanner, wire the Claude Code deny-list and hooks from Section 04, and move the value into the secret manager if it wasn't already.</p>
+      <p>Close the gap that let it happen: add the file to <code>.gitignore</code>, enable the pre-commit secret scanner, wire the Claude Code deny-list and hooks from Section 05, and move the value into the secret manager if it wasn't already.</p>
     </div></div>
   </div>
 
   <div class="callout warn">
     <span class="label">Pasted a secret into an AI chat?</span>
     <p>Same runbook: <strong>rotate the credential</strong>, delete the conversation, disable chat history/training on that tool, and report it. The paste already happened — rotation is the fix, deletion is just hygiene.</p>
-  </div>
-</div></section>
-
-<hr class="divider" />
-
-<!-- 07 TOOLS -->
-<section id="tools"><div class="wrap">
-  <h2><span class="num">07</span> Recommended &amp; Restricted Tools</h2>
-  <p class="section-sub">Our stance on categories. The maintained, named approved-tool list lives with AI Enablement.</p>
-  <div class="table-wrap">
-    <table>
-      <thead><tr><th>Category</th><th>Examples</th><th>Status</th><th>Condition</th></tr></thead>
-      <tbody>
-        <tr><td><b>Coding assistants (business tier)</b></td><td>Claude / Claude Code, GitHub Copilot, Cursor</td><td><span class="tag tag-ok">Recommended</span></td><td>Org account, training off, deny-list + hooks configured.</td></tr>
-        <tr><td><b>Chat assistants (business/enterprise)</b></td><td>Claude Team/Enterprise, ChatGPT Team, Gemini for Workspace</td><td><span class="tag tag-ok">Recommended</span></td><td>No-training + retention controls for Internal &amp; above.</td></tr>
-        <tr><td><b>Free consumer tiers</b></td><td>Free chatbots, browser AI add-ons</td><td><span class="tag tag-warn">Caution</span></td><td>Public data only. May train on inputs.</td></tr>
-        <tr><td><b>Autonomous agents / broad access</b></td><td>Agents that run commands, edit files, reach prod</td><td><span class="tag tag-warn">Caution</span></td><td>Least privilege, human in loop, never unattended on prod.</td></tr>
-        <tr><td><b>Unvetted tools &amp; plugins</b></td><td>Unknown extensions, "free GPT" sites, MCP servers of unknown origin</td><td><span class="tag tag-no">Avoid</span></td><td>No DPA, unclear data handling, supply-chain risk.</td></tr>
-        <tr><td><b>Any tool on Restricted data</b></td><td>—</td><td><span class="tag tag-no">Blocked</span></td><td>Unless the client approved that specific tool in writing.</td></tr>
-      </tbody>
-    </table>
-  </div>
-  <div class="callout rule">
-    <span class="label">Adding a tool</span>
-    <p>Found something useful that isn't approved? Don't feed it client data first. Raise it with AI Enablement to vet security, licensing, and data handling — then it's added to the list for everyone. Same due diligence applies to MCP servers and agent integrations.</p>
   </div>
 </div></section>
 

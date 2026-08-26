@@ -85,12 +85,12 @@
                       border-radius:999px; padding:7px 14px; letter-spacing:0.03em; }
 
   /* ---------- Agenda ---------- */
-  .agenda { display:grid; gap:12px; margin-top:30px; }
+  .agenda { display:grid; gap:15px; margin-top:28px; }
   .agenda-row { display:grid; grid-template-columns:56px 1fr; gap:20px; align-items:baseline;
                 border-top:1px solid var(--border-soft); padding-top:14px; }
   .agenda-row .n { font-family:var(--f-mono); color:var(--green); font-size:15px; }
-  .agenda-row b { font-size:clamp(18px,2.3vw,24px); font-weight:600; letter-spacing:-0.01em; }
-  .agenda-row span.d { color:var(--text-3); margin-left:12px; font-weight:400; font-size:16px; }
+  .agenda-row b { display:block; font-size:clamp(18px,2.3vw,24px); font-weight:600; letter-spacing:-0.01em; }
+  .agenda-row span.d { display:block; color:var(--text-3); margin-top:5px; font-weight:400; font-size:16px; }
 
   /* ---------- Clean lists ---------- */
   ul.list { list-style:none; padding:0; margin:28px 0 0; display:grid; gap:16px; }
@@ -229,10 +229,10 @@
       <div class="agenda">
         <div class="agenda-row"><span class="n">01</span><div><b>Principles</b><span class="d">how we think about AI</span></div></div>
         <div class="agenda-row"><span class="n">02</span><div><b>Sensitive data</b><span class="d">the hard boundary</span></div></div>
-        <div class="agenda-row"><span class="n">03</span><div><b>Guardrails</b><span class="d">make the safe path the default</span></div></div>
-        <div class="agenda-row"><span class="n">04</span><div><b>Coding with AI</b><span class="d">ship with confidence</span></div></div>
-        <div class="agenda-row"><span class="n">05</span><div><b>When things leak</b><span class="d">the runbook</span></div></div>
-        <div class="agenda-row"><span class="n">06</span><div><b>Tools &amp; policy</b><span class="d">what's allowed</span></div></div>
+        <div class="agenda-row"><span class="n">03</span><div><b>Tools &amp; policy</b><span class="d">what's allowed and what's not</span></div></div>
+        <div class="agenda-row"><span class="n">04</span><div><b>Guardrails</b><span class="d">make the safe path the default</span></div></div>
+        <div class="agenda-row"><span class="n">05</span><div><b>Coding with AI</b><span class="d">how to ship responsibly</span></div></div>
+        <div class="agenda-row"><span class="n">06</span><div><b>When things go wrong</b><span class="d">what to do next</span></div></div>
       </div>
     </div>
   </section>
@@ -334,14 +334,41 @@
   <section class="slide center" data-where="Module 03">
     <div class="inner">
       <div class="mod-num">03</div>
+      <div class="mod-title">Tools &amp; Policy</div>
+      <div class="mod-lessons" style="justify-content:center;"><span>What's allowed and what's not</span></div>
+    </div>
+  </section>
+
+  <section class="slide" data-where="Module 03 · Tools">
+    <div class="inner">
+      <span class="eyebrow"><span class="ln"></span> 03 · Tools &amp; policy</span>
+      <h2>What's allowed</h2>
+      <table class="ttable">
+        <thead><tr><th>Category</th><th>Examples</th><th>Status</th></tr></thead>
+        <tbody>
+          <tr><td><b>Coding assistants (business tier)</b></td><td>Claude / Claude Code, Copilot, Cursor</td><td><span class="tag tag-ok">Recommended</span></td></tr>
+          <tr><td><b>Chat assistants (enterprise)</b></td><td>Claude Team/Enterprise, ChatGPT Team</td><td><span class="tag tag-ok">Recommended</span></td></tr>
+          <tr><td><b>Free consumer tiers</b></td><td>Free chatbots, browser add-ons</td><td><span class="tag tag-warn">Public data only</span></td></tr>
+          <tr><td><b>Unvetted tools / MCP servers</b></td><td>Unknown plugins, "free GPT" sites</td><td><span class="tag tag-no">Avoid</span></td></tr>
+          <tr><td><b>Any tool on Restricted data</b></td><td>—</td><td><span class="tag tag-no">Needs written OK</span></td></tr>
+        </tbody>
+      </table>
+      <div class="takeaway"><b>Policy</b> New tool? Get it vetted by AI Enablement before any client data.</div>
+    </div>
+  </section>
+
+  <!-- MODULE 04 -->
+  <section class="slide center" data-where="Module 04">
+    <div class="inner">
+      <div class="mod-num">04</div>
       <div class="mod-title">Guardrails</div>
       <div class="mod-lessons" style="justify-content:center;"><span>Make the safe path the default</span></div>
     </div>
   </section>
 
-  <section class="slide" data-where="Module 03 · Guardrails">
+  <section class="slide" data-where="Module 04 · Guardrails">
     <div class="inner">
-      <span class="eyebrow"><span class="ln"></span> 03 · Guardrails</span>
+      <span class="eyebrow"><span class="ln"></span> 04 · Guardrails</span>
       <h2>Don't rely on memory — <span class="grad">enforce it</span></h2>
       <p class="lede">Two layers in Claude Code, committed to the repo so every engineer and every AI session inherits them.</p>
       <ul class="list tight">
@@ -355,9 +382,9 @@
     </div>
   </section>
 
-  <section class="slide" data-where="Module 03 · Enforce">
+  <section class="slide" data-where="Module 04 · Enforce">
     <div class="inner">
-      <span class="eyebrow"><span class="ln"></span> 03 · Guardrails</span>
+      <span class="eyebrow"><span class="ln"></span> 04 · Guardrails</span>
       <h2>What we enforce</h2>
       <ul class="list tight">
         <li><strong>Block secret access</strong> — AI can't read or print env / key files.</li>
@@ -369,26 +396,26 @@
     </div>
   </section>
 
-  <!-- MODULE 04 -->
-  <section class="slide center" data-where="Module 04">
+  <!-- MODULE 05 -->
+  <section class="slide center" data-where="Module 05">
     <div class="inner">
-      <div class="mod-num">04</div>
+      <div class="mod-num">05</div>
       <div class="mod-title">Coding With AI</div>
-      <div class="mod-lessons" style="justify-content:center;"><span>Ship with confidence</span></div>
+      <div class="mod-lessons" style="justify-content:center;"><span>How to ship responsibly</span></div>
     </div>
   </section>
 
-  <section class="slide" data-where="Module 04 · Coding">
+  <section class="slide" data-where="Module 05 · Coding">
     <div class="inner">
-      <span class="eyebrow"><span class="ln"></span> 04 · Coding with AI</span>
+      <span class="eyebrow"><span class="ln"></span> 05 · Coding with AI</span>
       <p class="statement">AI writes the first draft.<br /><span class="g">You are the engineer.</span></p>
       <p class="lede" style="margin-top:22px;">The moment you commit it, it's your code — same responsibility, same review, same standard as if you'd typed every line.</p>
     </div>
   </section>
 
-  <section class="slide" data-where="Module 04 · Non-negotiables">
+  <section class="slide" data-where="Module 05 · Non-negotiables">
     <div class="inner">
-      <span class="eyebrow"><span class="ln"></span> 04 · Coding with AI</span>
+      <span class="eyebrow"><span class="ln"></span> 05 · Coding with AI</span>
       <h2>Non-negotiables</h2>
       <ul class="list tight">
         <li><strong>Understand before you commit</strong> — can't explain it, don't ship it.</li>
@@ -400,9 +427,9 @@
     </div>
   </section>
 
-  <section class="slide" data-where="Module 04 · Where to use it">
+  <section class="slide" data-where="Module 05 · Where to use it">
     <div class="inner">
-      <span class="eyebrow"><span class="ln"></span> 04 · Coding with AI</span>
+      <span class="eyebrow"><span class="ln"></span> 05 · Coding with AI</span>
       <h2>Where to lean in — and hold back</h2>
       <div class="dd">
         <div class="dd-col dd-do">
@@ -427,18 +454,18 @@
     </div>
   </section>
 
-  <!-- MODULE 05 -->
-  <section class="slide center" data-where="Module 05">
+  <!-- MODULE 06 -->
+  <section class="slide center" data-where="Module 06">
     <div class="inner">
-      <div class="mod-num">05</div>
-      <div class="mod-title">When Things Leak</div>
-      <div class="mod-lessons" style="justify-content:center;"><span>The runbook</span></div>
+      <div class="mod-num">06</div>
+      <div class="mod-title">When Things Go Wrong</div>
+      <div class="mod-lessons" style="justify-content:center;"><span>What to do next</span></div>
     </div>
   </section>
 
-  <section class="slide" data-where="Module 05 · First principle">
+  <section class="slide" data-where="Module 06 · First principle">
     <div class="inner">
-      <span class="eyebrow"><span class="ln"></span> 05 · When things leak</span>
+      <span class="eyebrow"><span class="ln"></span> 06 · When things go wrong</span>
       <div class="callout danger">
         <span class="label">Rotate, don't just delete</span>
         <p>A secret that reached a remote, a log, or any tool is <strong>compromised permanently</strong> — assume it was scraped in seconds. Deleting the file or rewriting history does <strong>not</strong> fix it. <strong>Rotation is mandatory.</strong> Cleanup only stops future exposure.</p>
@@ -446,9 +473,9 @@
     </div>
   </section>
 
-  <section class="slide" data-where="Module 05 · Runbook">
+  <section class="slide" data-where="Module 06 · Runbook">
     <div class="inner">
-      <span class="eyebrow"><span class="ln"></span> 05 · When things leak</span>
+      <span class="eyebrow"><span class="ln"></span> 06 · When things go wrong</span>
       <h2>The runbook, in order</h2>
       <div class="steps">
         <div class="rstep"><span class="n">1</span><div><b>Contain</b><p>Disable or scope down the credential now; revoke its sessions.</p></div></div>
@@ -458,33 +485,6 @@
         <div class="rstep"><span class="n">5</span><div><b>Report</b><p>Tell your lead / security immediately — not a blame event.</p></div></div>
         <div class="rstep"><span class="n">6</span><div><b>Prevent</b><p>.gitignore, secret scanner, deny-list + hooks, secret manager.</p></div></div>
       </div>
-    </div>
-  </section>
-
-  <!-- MODULE 06 -->
-  <section class="slide center" data-where="Module 06">
-    <div class="inner">
-      <div class="mod-num">06</div>
-      <div class="mod-title">Tools &amp; Policy</div>
-      <div class="mod-lessons" style="justify-content:center;"><span>What's allowed</span></div>
-    </div>
-  </section>
-
-  <section class="slide" data-where="Module 06 · Tools">
-    <div class="inner">
-      <span class="eyebrow"><span class="ln"></span> 06 · Tools &amp; policy</span>
-      <h2>What's allowed</h2>
-      <table class="ttable">
-        <thead><tr><th>Category</th><th>Examples</th><th>Status</th></tr></thead>
-        <tbody>
-          <tr><td><b>Coding assistants (business tier)</b></td><td>Claude / Claude Code, Copilot, Cursor</td><td><span class="tag tag-ok">Recommended</span></td></tr>
-          <tr><td><b>Chat assistants (enterprise)</b></td><td>Claude Team/Enterprise, ChatGPT Team</td><td><span class="tag tag-ok">Recommended</span></td></tr>
-          <tr><td><b>Free consumer tiers</b></td><td>Free chatbots, browser add-ons</td><td><span class="tag tag-warn">Public data only</span></td></tr>
-          <tr><td><b>Unvetted tools / MCP servers</b></td><td>Unknown plugins, "free GPT" sites</td><td><span class="tag tag-no">Avoid</span></td></tr>
-          <tr><td><b>Any tool on Restricted data</b></td><td>—</td><td><span class="tag tag-no">Needs written OK</span></td></tr>
-        </tbody>
-      </table>
-      <div class="takeaway"><b>Policy</b> New tool? Get it vetted by AI Enablement before any client data.</div>
     </div>
   </section>
 
