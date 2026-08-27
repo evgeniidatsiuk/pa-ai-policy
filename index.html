@@ -133,6 +133,18 @@
   .callout.danger { border-left-color:var(--danger); background:var(--danger-bg); }
   .callout.ok { border-left-color:var(--ok); background:var(--ok-bg); }
   .callout.rule .label{color:var(--blue-soft);} .callout.danger .label{color:var(--danger);} .callout.ok .label{color:var(--ok);}
+  .callout.warn { border-left-color:var(--warn); background:var(--warn-bg); }
+  .callout.warn .label { color:var(--warn); }
+
+  /* ---------- Decision tree ---------- */
+  .tree { display:grid; gap:10px; margin-top:24px; }
+  .tree-step { display:grid; grid-template-columns:1fr auto; gap:16px; align-items:center; border:1px solid var(--border);
+               border-radius:12px; padding:13px 18px; background:var(--surface); }
+  .tree-q { font-size:clamp(14px,1.7vw,17px); color:var(--text-2); } .tree-q b { color:#fff; }
+  .tree-verdict { font-family:var(--f-mono); font-size:11.5px; font-weight:700; padding:6px 12px; border-radius:999px; white-space:nowrap; }
+  .v-no { color:var(--danger); background:var(--danger-bg); border:1px solid rgba(255,90,99,0.3); }
+  .v-warn { color:var(--warn); background:var(--warn-bg); border:1px solid rgba(255,192,67,0.3); }
+  .v-ok { color:var(--ok); background:var(--ok-bg); border:1px solid rgba(1,221,154,0.3); }
 
   /* ---------- Runbook ---------- */
   .steps { display:grid; grid-template-columns:1fr 1fr; gap:12px; margin-top:26px; }
@@ -196,6 +208,7 @@
 
   @media (max-width:760px) {
     .dd, .steps { grid-template-columns:1fr; }
+    .tree-step { grid-template-columns:1fr; gap:8px; }
     .level { grid-template-columns:1fr; gap:7px; }
     .agenda-row { grid-template-columns:40px 1fr; }
     .ttable { font-size:13px; } .ttable th, .ttable td { padding:10px 8px; }
@@ -275,23 +288,62 @@
       <h2>Assess the risk first</h2>
       <p class="lede">Before we build or ship anything that uses AI, we define what harm it could cause if things go wrong. The higher the risk, the more carefully we handle it — no skipping steps under pressure.</p>
       <div class="levels">
-        <div class="level"><span class="badge lv-pub">LOW</span><p>Internal helpers, drafts, tools that don't affect clients or money.<br /><b>Examples:</b> a throwaway script, a README draft, brainstorming, renaming or formatting.</p></div>
-        <div class="level"><span class="badge lv-con">MEDIUM</span><p>Features clients see, and that influence their decisions.<br /><b>Examples:</b> customer-facing UI copy, a report a client reads, a recommendation feature.</p></div>
-        <div class="level"><span class="badge lv-res">HIGH</span><p>Anything touching money, safety, legal rights, large volumes of personal data, or many people at once.<br /><b>Examples:</b> payments, authentication, health or legal outputs, bulk PII processing.</p></div>
+        <div class="level"><span class="badge lv-pub">LOW</span><p>Internal helpers, drafts, tools that don't affect clients or money.</p></div>
+        <div class="level"><span class="badge lv-con">MEDIUM</span><p>Features clients see, and that influence their decisions.</p></div>
+        <div class="level"><span class="badge lv-res">HIGH</span><p>Anything touching money, safety, legal rights, large volumes of personal data, or many people at once.</p></div>
       </div>
+      <p class="lede" style="font-size:16px; margin-top:18px;">The next three slides break each level down — examples plus how to use AI.</p>
     </div>
   </section>
 
-  <section class="slide" data-where="Module 01 · AI at each level">
+  <section class="slide" data-where="Module 01 · Low risk">
     <div class="inner">
-      <span class="eyebrow"><span class="ln"></span> 01 · Principles</span>
-      <h2>How to use AI at each level</h2>
-      <p class="lede">Same idea as a rule of thumb: the higher the risk, the tighter the leash.</p>
-      <div class="levels">
-        <div class="level"><span class="badge lv-pub">LOW</span><p><b>Green light</b> — use AI freely. Standard review is enough; just don't paste anything sensitive.</p></div>
-        <div class="level"><span class="badge lv-con">MEDIUM</span><p><b>Use, then verify</b> — a human reviews everything before it reaches a client. Check facts, tone, and edge cases.</p></div>
-        <div class="level"><span class="badge lv-res">HIGH</span><p><b>AI assists, never decides</b> — mandatory expert review, extra testing, approved tools only. When in doubt, don't.</p></div>
-      </div>
+      <span class="eyebrow"><span class="ln"></span> 01 · Assess the risk</span>
+      <h2><span style="color:var(--ok)">Low</span> risk</h2>
+      <p class="lede">Internal helpers and drafts that don't affect clients or money.</p>
+      <ul class="list tight">
+        <li>Internal throwaway scripts and one-off automation</li>
+        <li>Drafting a README, docs, or code comments</li>
+        <li>Brainstorming names, ideas, or approaches</li>
+        <li>Reformatting, renaming, or converting data</li>
+        <li>Summarizing an internal note or thread</li>
+        <li>Explaining an error or unfamiliar snippet</li>
+      </ul>
+      <div class="callout ok"><span class="label">Using AI here</span><p>Green light — use AI freely. Standard review is enough; just don't paste anything sensitive.</p></div>
+    </div>
+  </section>
+
+  <section class="slide" data-where="Module 01 · Medium risk">
+    <div class="inner">
+      <span class="eyebrow"><span class="ln"></span> 01 · Assess the risk</span>
+      <h2><span style="color:var(--warn)">Medium</span> risk</h2>
+      <p class="lede">Things clients see, and that influence their decisions.</p>
+      <ul class="list tight">
+        <li>Customer-facing UI copy and microcopy</li>
+        <li>A report or analysis a client will read</li>
+        <li>A recommendation, ranking, or suggestion feature</li>
+        <li>Content published under our name</li>
+        <li>A prototype shown to a client</li>
+        <li>Non-critical logic in a client-facing feature</li>
+      </ul>
+      <div class="callout warn"><span class="label">Using AI here</span><p>Use, then verify — a human reviews everything before it reaches a client. Check facts, tone, and edge cases.</p></div>
+    </div>
+  </section>
+
+  <section class="slide" data-where="Module 01 · High risk">
+    <div class="inner">
+      <span class="eyebrow"><span class="ln"></span> 01 · Assess the risk</span>
+      <h2><span style="color:var(--danger)">High</span> risk</h2>
+      <p class="lede">Money, safety, legal rights, bulk personal data, or many people at once.</p>
+      <ul class="list tight">
+        <li>Payment, billing, or checkout logic</li>
+        <li>Authentication and authorization</li>
+        <li>Health, legal, or financial outputs</li>
+        <li>Bulk processing of personal data (PII)</li>
+        <li>Anything deployed to many users unattended</li>
+        <li>Safety-critical or irreversible actions</li>
+      </ul>
+      <div class="callout danger"><span class="label">Using AI here</span><p>AI assists, it never decides — mandatory expert review, extra testing, approved tools only. When in doubt, don't.</p></div>
     </div>
   </section>
 
@@ -359,16 +411,79 @@
     </div>
   </section>
 
-  <section class="slide" data-where="Module 02 · Data classes">
+  <section class="slide" data-where="Module 02 · Can I use AI?">
     <div class="inner">
       <span class="eyebrow"><span class="ln"></span> 02 · Sensitive data</span>
-      <h2>Classify before you share</h2>
-      <div class="levels">
-        <div class="level"><span class="badge lv-pub">PUBLIC</span><p>Open source, published docs, marketing. <b>Any tool is fine.</b></p></div>
-        <div class="level"><span class="badge lv-int">INTERNAL</span><p>Generic non-sensitive material. <b>Approved business-tier tools</b> — not free tiers that train on inputs.</p></div>
-        <div class="level"><span class="badge lv-con">CONFIDENTIAL</span><p>Proprietary logic, architecture, financials. <b>Approved enterprise tools only,</b> minimized/redacted.</p></div>
-        <div class="level"><span class="badge lv-res">RESTRICTED</span><p>Client code under NDA, secrets, PII. <b>No AI without written client approval.</b></p></div>
+      <h2>Can I put this into AI?</h2>
+      <p class="lede">A five-second gut check before you paste anything. Work top to bottom — the first match wins.</p>
+      <div class="tree">
+        <div class="tree-step"><div class="tree-q"><b>Secrets</b> — passwords, keys, tokens, <code class="inline">.env</code>?</div><span class="tree-verdict v-no">Never</span></div>
+        <div class="tree-step"><div class="tree-q"><b>Client data under NDA</b>, personal data (PII), payment or health data?</div><span class="tree-verdict v-no">Written client OK only</span></div>
+        <div class="tree-step"><div class="tree-q"><b>Proprietary</b> logic, architecture, or financials?</div><span class="tree-verdict v-warn">Approved tool · redact</span></div>
+        <div class="tree-step"><div class="tree-q"><b>Public</b> — fine to publish (OSS, docs, marketing)?</div><span class="tree-verdict v-ok">Any approved tool</span></div>
+        <div class="tree-step"><div class="tree-q"><b>Anything else</b> — internal &amp; generic</div><span class="tree-verdict v-warn">Approved business tool</span></div>
       </div>
+      <div class="callout warn"><span class="label">Today, in practice</span><p>We only have personal accounts — treat them as public tools: <strong>only Public data goes in.</strong> Anything above needs approval. When in doubt, don't.</p></div>
+    </div>
+  </section>
+
+  <section class="slide" data-where="Module 02 · Public">
+    <div class="inner">
+      <span class="eyebrow"><span class="ln"></span> 02 · Sensitive data</span>
+      <h2><span style="color:var(--ok)">Public</span> data</h2>
+      <p class="lede">Already public — no harm if it's seen.</p>
+      <ul class="list tight">
+        <li>Open-source code and public libraries</li>
+        <li>Published docs, blog posts, marketing copy</li>
+        <li>Anything already on our site or public GitHub</li>
+        <li>General "how do I…" programming questions</li>
+      </ul>
+      <div class="callout ok"><span class="label">Verdict</span><p>Any approved tool is fine.</p></div>
+    </div>
+  </section>
+
+  <section class="slide" data-where="Module 02 · Internal">
+    <div class="inner">
+      <span class="eyebrow"><span class="ln"></span> 02 · Sensitive data</span>
+      <h2>Internal data</h2>
+      <p class="lede">Generic, non-sensitive material that stays inside the company.</p>
+      <ul class="list tight">
+        <li>Generic internal snippets with no secrets</li>
+        <li>Boilerplate and scaffolding</li>
+        <li>Internal process notes without client specifics</li>
+        <li>Draft docs that stay in-house</li>
+      </ul>
+      <div class="callout rule"><span class="label">Verdict</span><p>Approved business-tier tools, training off — not free tiers that train on inputs.</p></div>
+    </div>
+  </section>
+
+  <section class="slide" data-where="Module 02 · Confidential">
+    <div class="inner">
+      <span class="eyebrow"><span class="ln"></span> 02 · Sensitive data</span>
+      <h2><span style="color:var(--warn)">Confidential</span> data</h2>
+      <p class="lede">Proprietary to us — real damage if it leaks.</p>
+      <ul class="list tight">
+        <li>Proprietary logic and architecture</li>
+        <li>Financials, roadmaps, pricing</li>
+        <li>Non-public personnel or business data</li>
+        <li>Internal designs we wouldn't want leaked</li>
+      </ul>
+      <div class="callout warn"><span class="label">Verdict</span><p>Approved enterprise tools only, minimized and redacted.</p></div>
+    </div>
+  </section>
+
+  <section class="slide" data-where="Module 02 · Restricted">
+    <div class="inner">
+      <span class="eyebrow"><span class="ln"></span> 02 · Sensitive data</span>
+      <h2><span style="color:var(--danger)">Restricted</span> data</h2>
+      <p class="lede">The hard line — never goes to an unapproved tool.</p>
+      <ul class="list tight">
+        <li>Client source or databases under NDA</li>
+        <li>Credentials, secrets, API keys, <code class="inline">.env</code></li>
+        <li>Personal data (PII), payment or health data</li>
+        <li>Anything a contract says can't leave the client</li>
+      </ul>
+      <div class="callout danger"><span class="label">Verdict</span><p>No AI unless the client approved the specific tool in writing.</p></div>
     </div>
   </section>
 
