@@ -607,8 +607,8 @@ aws iam delete-access-key --user-name svc-app --access-key-id <span class="str">
       <p>Check the provider's audit/access logs and billing for use you didn't authorize between leak and rotation. If the key touched customer data, treat it as a potential data incident and escalate.</p>
     </div></div>
     <div class="step"><div>
-      <h4>Purge from git history</h4>
-      <p>Only <em>after</em> rotating. Rewrite history to remove the file, then force-push. Coordinate — everyone must re-clone or hard-reset, and open PRs may need rebasing.</p>
+      <h4>Clean up</h4>
+      <p>Only <em>after</em> rotating. Remove the secret from code, logs, and chat history; where it reached git history, rewrite it to remove the file, then force-push. Coordinate — everyone must re-clone or hard-reset, and open PRs may need rebasing.</p>
       <div class="pre-label">Example — remove a file from all history</div>
       <pre><code><span class="cm"># preferred: git-filter-repo</span>
 git filter-repo --path .env --invert-paths
@@ -630,6 +630,10 @@ git push --force --all</code></pre>
   <div class="callout warn">
     <span class="label">Pasted a secret into an AI chat?</span>
     <p>Same runbook: <strong>rotate the credential</strong>, delete the conversation, disable chat history/training on that tool, and report it. The paste already happened — rotation is the fix, deletion is just hygiene.</p>
+  </div>
+  <div class="callout rule">
+    <span class="label">Remember</span>
+    <p>Not every leak has the same impact — a test key isn't a production database credential or an NDA client secret. Still, when in doubt: rotate and report.</p>
   </div>
 </div></section>
 

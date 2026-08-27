@@ -568,7 +568,7 @@
       <span class="eyebrow"><span class="ln"></span> 06 · When things go wrong</span>
       <div class="callout danger">
         <span class="label">Rotate, don't just delete</span>
-        <p>A secret that reached a remote, a log, or any tool is <strong>compromised permanently</strong> — assume it was scraped in seconds. Deleting the file or rewriting history does <strong>not</strong> fix it. <strong>Rotation is mandatory.</strong> Cleanup only stops future exposure.</p>
+        <p>Once a secret reaches a remote system, a log, or any external tool (including AI), treat it as <strong>compromised</strong> — assume it was copied almost immediately. Deleting the file or rewriting git history does <strong>not</strong> make it safe again. <strong>You must rotate it.</strong> Cleanup only stops further exposure.</p>
       </div>
     </div>
   </section>
@@ -578,13 +578,29 @@
       <span class="eyebrow"><span class="ln"></span> 06 · When things go wrong</span>
       <h2>The runbook, in order</h2>
       <div class="steps">
-        <div class="rstep"><span class="n">1</span><div><b>Contain</b><p>Disable or scope down the credential now; revoke its sessions.</p></div></div>
-        <div class="rstep"><span class="n">2</span><div><b>Rotate at source</b><p>New key first, deploy it, then revoke the old — don't down prod.</p></div></div>
-        <div class="rstep"><span class="n">3</span><div><b>Assess exposure</b><p>Check provider audit logs &amp; billing for unauthorized use.</p></div></div>
-        <div class="rstep"><span class="n">4</span><div><b>Purge history</b><p><code class="inline">git filter-repo</code> / BFG, force-push, team re-clones.</p></div></div>
-        <div class="rstep"><span class="n">5</span><div><b>Report</b><p>Tell your lead / security immediately — not a blame event.</p></div></div>
-        <div class="rstep"><span class="n">6</span><div><b>Prevent</b><p>.gitignore, secret scanner, deny-list + hooks, secret manager.</p></div></div>
+        <div class="rstep"><span class="n">1</span><div><b>Contain</b><p>Disable or tightly scope the credential right away; revoke active sessions if you can.</p></div></div>
+        <div class="rstep"><span class="n">2</span><div><b>Rotate at source</b><p>Create the new secret first, deploy it, then revoke the old one — don't take prod down.</p></div></div>
+        <div class="rstep"><span class="n">3</span><div><b>Assess exposure</b><p>Check provider audit logs &amp; billing for unauthorized use. If it was a client's, involve the right people early.</p></div></div>
+        <div class="rstep"><span class="n">4</span><div><b>Clean up</b><p>Remove it from code, logs, and chat history. Rewriting git history (filter-repo / BFG + force-push) is sometimes needed — do it carefully and coordinate.</p></div></div>
+        <div class="rstep"><span class="n">5</span><div><b>Report</b><p>Tell your lead or security contact promptly. Not a blame event — fast reporting beats perfection.</p></div></div>
+        <div class="rstep"><span class="n">6</span><div><b>Prevent</b><p>Strengthen the basics: <code class="inline">.gitignore</code>, secret scanning, deny-lists + hooks, a proper secret manager.</p></div></div>
       </div>
+    </div>
+  </section>
+
+  <section class="slide" data-where="Module 06 · Pasted into AI">
+    <div class="inner">
+      <span class="eyebrow"><span class="ln"></span> 06 · When things go wrong</span>
+      <h2>Special case: secret pasted into an AI tool</h2>
+      <p class="lede">Pasted a secret into ChatGPT, Claude, Cursor, or similar? Treat it exactly like a public leak.</p>
+      <ul class="list tight">
+        <li><strong>Treat it as compromised</strong> — same as any public leak.</li>
+        <li><strong>Stop using that chat.</strong></li>
+        <li><strong>Rotate the secret.</strong></li>
+        <li><strong>Delete the conversation</strong> if the tool allows it.</li>
+        <li><strong>Follow the runbook</strong> from step 1.</li>
+      </ul>
+      <div class="takeaway"><b>Remember</b> Not every leak is equal — a test key isn't a prod DB credential or an NDA client secret. When in doubt, rotate and report.</div>
     </div>
   </section>
 
