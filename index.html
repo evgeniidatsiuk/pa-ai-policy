@@ -172,6 +172,13 @@
               border-radius:999px; padding:9px 16px; background:var(--surface); }
   .takeaway b { color:var(--blue-soft); text-transform:uppercase; letter-spacing:0.1em; font-size:11px; }
 
+  /* ---------- Video link ---------- */
+  .vidlink { margin-top:24px; display:inline-flex; align-items:center; gap:9px; font-family:var(--f-mono);
+             font-size:12.5px; letter-spacing:0.04em; color:var(--green); text-decoration:none;
+             border:1px solid rgba(1,221,154,0.35); border-radius:999px; padding:10px 18px; background:var(--ok-bg); transition:.15s; }
+  a.vidlink:hover { border-color:var(--green); background:rgba(1,221,154,0.14); }
+  .vidlink-soon { color:var(--text-3); border-color:var(--border); background:var(--surface); cursor:default; }
+
   /* ---------- HUD / chrome ---------- */
   .rail { position:fixed; top:0; left:0; height:3px; width:0; z-index:40;
           background:linear-gradient(90deg,var(--green),var(--blue-soft)); transition:width .45s ease; box-shadow:0 0 10px rgba(1,221,154,0.5); }
@@ -361,9 +368,11 @@
           <h4>Never paste into AI</h4>
           <ul>
             <li>Passwords, API keys, tokens, <code class="inline">.env</code> files</li>
-            <li>Client source / databases under NDA</li>
+            <li>Client source code or databases under NDA</li>
             <li>Personal data (PII), payment or health data</li>
             <li>Trade secrets &amp; proprietary algorithms</li>
+            <li>Full production logs or real customer records</li>
+            <li>Screenshots or recordings containing any of the above</li>
           </ul>
         </div>
         <div class="dd-col dd-do">
@@ -371,10 +380,15 @@
           <ul>
             <li>Keep secrets in a secret manager, referenced by env</li>
             <li>Redact — placeholders for real names, keys, IDs</li>
-            <li>Reproduce bugs with minimal synthetic data</li>
+            <li>Reproduce bugs with minimal synthetic or anonymised data</li>
             <li>Scan before commit with <code class="inline">gitleaks</code></li>
+            <li>Unsure how to classify it? Ask a colleague or lead</li>
           </ul>
         </div>
+      </div>
+      <div class="callout danger">
+        <span class="label">Already pasted something sensitive?</span>
+        <p>Stop using that chat, don't continue the conversation, and follow the incident process — see <strong>Module 06 · When things go wrong</strong>.</p>
       </div>
     </div>
   </section>
@@ -419,15 +433,19 @@
     <div class="inner">
       <span class="eyebrow"><span class="ln"></span> 04 · Guardrails</span>
       <h2>Don't rely on memory — <span class="grad">enforce it</span></h2>
-      <p class="lede">Two layers in Claude Code, committed to the repo so every engineer and every AI session inherits them.</p>
-      <ul class="list tight">
-        <li><strong>Permissions</strong> — declaratively deny reading <code class="inline">.env</code>, keys and <code class="inline">secrets/**</code>.</li>
-        <li><strong>Hooks</strong> — a <code class="inline">PreToolUse</code> hook blocks risky commands; a <code class="inline">PostToolUse</code> hook scans edits for secrets.</li>
-      </ul>
-      <pre><code><span class="cm">// .claude/settings.json — the cheapest guardrail</span>
+      <p class="lede">The best safety rules are the ones the tool enforces. We put guardrails into the dev environment, committed to the repo, so every engineer and every AI session inherits them automatically.</p>
+      <div style="display:grid; gap:12px; margin-top:26px;">
+        <div class="rstep"><span class="n">1</span><div><b>Permissions</b><p>Declaratively block the AI from reading sensitive files — <code class="inline">.env</code>, keys, <code class="inline">secrets/**</code>.</p></div></div>
+        <div class="rstep"><span class="n">2</span><div><b>Hooks</b><p>Stop risky actions before they run, and scan changes for secrets after they're made.</p></div></div>
+      </div>
+      <pre><code><span class="cm">// .claude/settings.json</span>
 <span class="tok">"permissions"</span>: {
   <span class="tok">"deny"</span>: [<span class="str">"Read(./.env)"</span>, <span class="str">"Read(./.env.*)"</span>, <span class="str">"Read(./secrets/**)"</span>]
 }</code></pre>
+      <div><!-- TODO: when the guardrails video is recorded, replace the span with: <a class="vidlink" href="VIDEO_URL" target="_blank" rel="noopener">&#9654; Watch: how to set up these guardrails</a> -->
+        <span class="vidlink vidlink-soon">&#9654; Video guide — coming soon</span>
+      </div>
+      <div class="takeaway"><b>Any tool</b> Cursor, Copilot, internal agents — configure them so unsafe actions are blocked by default.</div>
     </div>
   </section>
 
@@ -435,13 +453,14 @@
     <div class="inner">
       <span class="eyebrow"><span class="ln"></span> 04 · Guardrails</span>
       <h2>What we enforce</h2>
-      <ul class="list tight">
-        <li><strong>Block secret access</strong> — AI can't read or print env / key files.</li>
-        <li><strong>Block destructive commands</strong> — no <code class="inline">rm -rf</code> on home, no force-push to main.</li>
-        <li><strong>Scan on every edit</strong> — <code class="inline">gitleaks</code> runs after writes; a hit stops the commit.</li>
-        <li><strong>Least privilege for agents &amp; MCP</strong> — grant only the tools a task needs.</li>
-      </ul>
-      <div class="takeaway"><b>Why</b> Safety becomes "the tool won't let you," not "everyone remembers."</div>
+      <div style="display:grid; gap:12px; margin-top:26px;">
+        <div class="rstep"><span class="n">&#10003;</span><div><b>Block secret access</b><p>The AI can't read or print <code class="inline">.env</code> files, keys, tokens, or secret folders.</p></div></div>
+        <div class="rstep"><span class="n">&#10003;</span><div><b>Block destructive commands</b><p>No <code class="inline">rm -rf</code> on important directories, no force-push to main, no overwriting critical config.</p></div></div>
+        <div class="rstep"><span class="n">&#10003;</span><div><b>Scan on every edit</b><p>After the AI writes code, we scan for secrets (e.g. <code class="inline">gitleaks</code>). If something is found, the change is stopped.</p></div></div>
+        <div class="rstep"><span class="n">&#10003;</span><div><b>Least privilege for agents &amp; MCP</b><p>Agents and tools only get the permissions they actually need for the task. Everything else stays closed.</p></div></div>
+        <div class="rstep"><span class="n">&#10003;</span><div><b>Limit outbound risk</b><p>Prevent the AI from sending sensitive data to external services unless it's explicitly allowed.</p></div></div>
+      </div>
+      <div class="takeaway"><b>Why</b> Safety becomes "the tool won't let you," not "everyone has to remember the rules."</div>
     </div>
   </section>
 
@@ -458,7 +477,7 @@
     <div class="inner">
       <span class="eyebrow"><span class="ln"></span> 05 · Coding with AI</span>
       <p class="statement">AI writes the first draft.<br /><span class="g">You are the engineer.</span></p>
-      <p class="lede" style="margin-top:22px;">The moment you commit it, it's your code — same responsibility, same review, same standard as if you'd typed every line.</p>
+      <p class="lede" style="margin-top:22px;">The moment you commit it, it's your code. It carries the same responsibility, the same review, and the same standard as if you had written every line yourself.</p>
     </div>
   </section>
 
@@ -467,12 +486,41 @@
       <span class="eyebrow"><span class="ln"></span> 05 · Coding with AI</span>
       <h2>Non-negotiables</h2>
       <ul class="list tight">
-        <li><strong>Understand before you commit</strong> — can't explain it, don't ship it.</li>
-        <li><strong>Review for security</strong> — injection, authz, unsafe defaults, secrets in code.</li>
-        <li><strong>Verify dependencies are real</strong> — AI hallucinates packages; attackers weaponize the names.</li>
-        <li><strong>Own the tests</strong> — don't let the model grade its own homework.</li>
-        <li><strong>Same PR review</strong> — AI-generated changes get no fast lane.</li>
+        <li><strong>Understand before you commit</strong> — if you can't explain it, don't ship it.</li>
+        <li><strong>Review for security</strong> — injection, broken access control, unsafe defaults, secrets in code, and other common vulnerabilities.</li>
+        <li><strong>Verify dependencies are real</strong> — AI invents package names; attackers register them.</li>
+        <li><strong>Own the tests</strong> — never let the model be the only one checking its own work.</li>
+        <li><strong>Same PR review</strong> — AI-generated changes get no fast lane or special treatment.</li>
+        <li><strong>Watch the blind spots</strong> — error handling, edge cases, and unnecessary complexity.</li>
       </ul>
+    </div>
+  </section>
+
+  <section class="slide" data-where="Module 05 · Review AI output">
+    <div class="inner">
+      <span class="eyebrow"><span class="ln"></span> 05 · Coding with AI</span>
+      <h2>How to review AI output</h2>
+      <p class="lede">AI can sound confident even when it's wrong. Review with that in mind.</p>
+      <div class="dd">
+        <div class="dd-col dd-do">
+          <h4>For code</h4>
+          <ul>
+            <li>Read the full diff, not just the summary</li>
+            <li>Check error handling, edge cases, and assumptions</li>
+            <li>Look for over-complicated or unnecessary code</li>
+            <li>Make sure you can explain every important part</li>
+          </ul>
+        </div>
+        <div class="dd-col dd-do">
+          <h4>For text, analysis &amp; recommendations</h4>
+          <ul>
+            <li>Verify key facts and sources</li>
+            <li>Check tone and claims fit the audience</li>
+            <li>Remove anything you can't stand behind</li>
+          </ul>
+        </div>
+      </div>
+      <div class="takeaway"><b>Simple test</b> If you wouldn't be comfortable explaining it to a client or in a post-mortem, don't ship it yet.</div>
     </div>
   </section>
 
@@ -484,22 +532,25 @@
         <div class="dd-col dd-do">
           <h4>Strong fit</h4>
           <ul>
-            <li>Boilerplate, scaffolding, migrations</li>
-            <li>Test drafts, docstrings, READMEs</li>
-            <li>Refactors on code you understand</li>
-            <li>Explaining errors &amp; unfamiliar code</li>
+            <li>Boilerplate, scaffolding, and migrations</li>
+            <li>Test drafts, docstrings, and READMEs</li>
+            <li>Refactors on code you already understand</li>
+            <li>Explaining errors and unfamiliar code</li>
+            <li>Exploring alternatives — you still choose</li>
           </ul>
         </div>
         <div class="dd-col dd-no">
           <h4>Keep human-led</h4>
           <ul>
-            <li>Core architecture &amp; design</li>
-            <li>Security-critical logic &amp; payments</li>
-            <li>Anything touching Restricted data</li>
-            <li>Final sign-off on correctness</li>
+            <li>Core architecture and design decisions</li>
+            <li>Security-critical logic, auth, and payments</li>
+            <li>Anything that touches Restricted data</li>
+            <li>Performance-critical or highly concurrent code</li>
+            <li>Final sign-off on correctness and readiness</li>
           </ul>
         </div>
       </div>
+      <div class="takeaway"><b>Simple rule</b> Use AI to move faster on work you already understand; keep full human control where mistakes are expensive or hard to catch.</div>
     </div>
   </section>
 

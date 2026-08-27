@@ -87,6 +87,9 @@
   ul.clean { list-style:none; padding-left:0; }
   ul.clean li { padding-left:26px; position:relative; }
   ul.clean li::before { content:""; position:absolute; left:0; top:11px; width:9px; height:2px; background:var(--green); }
+  .vidlink { display:inline-flex; align-items:center; gap:9px; margin:8px 0 4px; font-family:var(--f-mono); font-size:13px; color:var(--green); text-decoration:none; border:1px solid rgba(1,221,154,0.35); border-radius:999px; padding:9px 16px; background:var(--ok-bg); transition:.15s; }
+  a.vidlink:hover { border-color:var(--green); background:rgba(1,221,154,0.14); }
+  .vidlink-soon { color:var(--text-3); border-color:var(--border); background:var(--surface); cursor:default; }
 
   /* ---------- Cards ---------- */
   .grid { display:grid; gap:15px; }
@@ -383,7 +386,14 @@
     <li><strong>Scan before commit</strong> — a pre-commit secret scanner (<code>gitleaks</code>, <code>trufflehog</code>, <code>git-secrets</code>) as a required hook so a key never reaches history in the first place.</li>
     <li><strong>Turn off training/history</strong> on any tool touching Internal or above, and confirm a DPA is in place.</li>
     <li><strong>Client terms win</strong> — a project's NDA or security addendum overrides this document. Check per project before pointing any AI at client work.</li>
+    <li><strong>Mind the format, not just the text</strong> — full production logs, real customer records, and screenshots or recordings can all carry secrets, PII, or client code. Redact or synthesise first.</li>
+    <li><strong>Unsure how to classify something?</strong> Ask a colleague or your lead before sending it to any AI tool.</li>
   </ul>
+
+  <div class="callout warn">
+    <span class="label">Already pasted something sensitive?</span>
+    <p>Stop using that chat, don't continue the conversation, and follow the runbook in <a href="#incident">Section 07 — Leaked Secrets &amp; Rotation</a>. If it was a credential, rotate it.</p>
+  </div>
 
   <div class="pre-label">Example — gitleaks as a pre-commit hook (.pre-commit-config.yaml)</div>
   <pre><code><span class="tok">repos:</span>
@@ -424,6 +434,10 @@
 <section id="hooks"><div class="wrap">
   <h2><span class="num">05</span> Guardrails With Claude Code Hooks</h2>
   <p class="section-sub">Don't rely on discipline alone. Make the safe path the default by enforcing it in tooling. Two layers: permissions (declarative) and hooks (programmable).</p>
+  <div><!-- TODO: when the guardrails video is recorded, replace the span with: <a class="vidlink" href="VIDEO_URL" target="_blank" rel="noopener">&#9654; Watch: how to set up these guardrails</a> -->
+    <span class="vidlink vidlink-soon">&#9654; Video guide — coming soon</span>
+  </div>
+  <p>The same principle applies beyond Claude Code — configure Cursor, Copilot, and internal agents so unsafe actions are blocked by default.</p>
 
   <h3>Layer 1 — deny access to secrets declaratively</h3>
   <p>The cheapest guardrail: tell Claude Code it may never read secret files. Add deny rules in <code>.claude/settings.json</code> (commit this so the whole team inherits it):</p>
@@ -492,7 +506,7 @@ cmd=$(echo <span class="str">"$input"</span> | jq -r <span class="str">'.tool_in
   <p class="section-sub">Coding with assistants like Claude Code, Copilot, and Cursor.</p>
   <div class="callout rule">
     <span class="label">Core stance</span>
-    <p>AI writes the first draft; <strong>you are the engineer</strong>. The moment you commit it, it's your code — same responsibility, same review, same standard as if you'd typed every line.</p>
+    <p>AI writes the first draft; <strong>you are the engineer</strong>. The moment you commit it, it's your code — it carries the same responsibility, the same review, and the same standard as if you had written every line yourself.</p>
   </div>
   <h3>Non-negotiables</h3>
   <ul class="clean">
@@ -501,8 +515,34 @@ cmd=$(echo <span class="str">"$input"</span> | jq -r <span class="str">'.tool_in
     <li><strong>Verify dependencies are real.</strong> AI hallucinates package names; attackers pre-register them with malware ("slopsquatting"). Confirm the package, its maintainer, and download history before adding it.</li>
     <li><strong>Watch licensing &amp; IP.</strong> Generated code can mirror copyrighted or copyleft sources. Don't drop large verbatim blocks into client deliverables without knowing their origin.</li>
     <li><strong>Own the tests.</strong> Don't let the model grade its own homework — review that tests exercise real behavior and edge cases, not just restate the implementation.</li>
-    <li><strong>Same PR review as everything else.</strong> AI-generated changes don't get a fast lane.</li>
+    <li><strong>Same PR review as everything else.</strong> AI-generated changes don't get a fast lane or special treatment.</li>
+    <li><strong>Watch the blind spots.</strong> Error handling, edge cases, and unnecessary complexity are where AI output most often falls short — review them explicitly.</li>
   </ul>
+  <h3>How to review AI output</h3>
+  <p>AI can sound confident even when it's wrong — review with that in mind.</p>
+  <div class="dd">
+    <div class="dd-col dd-do">
+      <h4>For code</h4>
+      <ul>
+        <li>Read the full diff, not just the summary</li>
+        <li>Check error handling, edge cases, and assumptions</li>
+        <li>Look for over-complicated or unnecessary code</li>
+        <li>Make sure you can explain every important part</li>
+      </ul>
+    </div>
+    <div class="dd-col dd-do">
+      <h4>For text, analysis &amp; recommendations</h4>
+      <ul>
+        <li>Verify key facts and sources</li>
+        <li>Check that tone and claims fit the audience</li>
+        <li>Remove anything you can't stand behind</li>
+      </ul>
+    </div>
+  </div>
+  <div class="callout warn">
+    <span class="label">Simple test</span>
+    <p>If you wouldn't be comfortable explaining the work to a client or in a post-mortem, don't ship it yet.</p>
+  </div>
   <h3>Good fits vs. keep human-led</h3>
   <div class="dd">
     <div class="dd-col dd-do">
@@ -513,6 +553,7 @@ cmd=$(echo <span class="str">"$input"</span> | jq -r <span class="str">'.tool_in
         <li>Mechanical refactors on code you understand</li>
         <li>Explaining errors, unfamiliar code, and APIs</li>
         <li>First-pass code review / diff sanity checks</li>
+        <li>Exploring alternative approaches — you still choose</li>
       </ul>
     </div>
     <div class="dd-col dd-no">
@@ -521,10 +562,15 @@ cmd=$(echo <span class="str">"$input"</span> | jq -r <span class="str">'.tool_in
         <li>Core architecture &amp; system design decisions</li>
         <li>Security-critical logic (authn/authz, crypto, payments)</li>
         <li>Anything touching Restricted client data</li>
+        <li>Performance-critical or highly concurrent code</li>
         <li>Production operations without review</li>
         <li>Final sign-off on correctness &amp; quality</li>
       </ul>
     </div>
+  </div>
+  <div class="callout rule">
+    <span class="label">Simple rule</span>
+    <p>Use AI to move faster on work you already understand; keep full human control where mistakes are expensive or hard to catch.</p>
   </div>
 </div></section>
 
