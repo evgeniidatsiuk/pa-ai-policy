@@ -416,7 +416,7 @@
           <tr><td><b>Any tool on Restricted data</b></td><td>—</td><td><span class="tag tag-no">Needs written OK</span></td></tr>
         </tbody>
       </table>
-      <div class="takeaway"><b>Policy</b> New tool? Get it vetted by AI Enablement before any client data.</div>
+      <div class="takeaway"><b>Policy</b> Want to use a new tool? Get it vetted by AI Enablement before it touches any client or internal data.</div>
     </div>
   </section>
 
@@ -613,24 +613,38 @@
         <div class="dd-col dd-do">
           <h4>Do</h4>
           <ul>
-            <li>Own, review and verify every output</li>
-            <li>Use approved tools with training off</li>
-            <li>Redact &amp; use the secret manager</li>
-            <li>Check per-project client rules</li>
-            <li>Rotate &amp; report leaks immediately</li>
+            <li>Own, review, and verify every output</li>
+            <li>Use only approved tools — training &amp; retention off</li>
+            <li>Redact sensitive data; use the secret manager</li>
+            <li>Check the client &amp; project rules before you start</li>
+            <li>Rotate secrets and report leaks immediately</li>
           </ul>
         </div>
         <div class="dd-col dd-no">
           <h4>Don't</h4>
           <ul>
-            <li>Paste secrets or <code class="inline">.env</code> into AI</li>
+            <li>Paste secrets or <code class="inline">.env</code> files into any AI tool</li>
             <li>Feed NDA client code to unapproved tools</li>
             <li>Ship code you don't understand</li>
-            <li>Trust facts, sources or packages blindly</li>
-            <li>Blame the AI — you're accountable</li>
+            <li>Trust facts, sources, or packages blindly</li>
+            <li>Blame the AI — you remain accountable for what you ship</li>
           </ul>
         </div>
       </div>
+    </div>
+  </section>
+
+  <!-- TRANSPARENCY -->
+  <section class="slide" data-where="Honesty about AI">
+    <div class="inner">
+      <span class="eyebrow"><span class="ln"></span> Honesty about AI</span>
+      <h2>We stay honest about AI's role</h2>
+      <ul class="list tight">
+        <li>Say clearly <strong>where AI was used, what it did, and its known limits</strong> — inside the team and with clients.</li>
+        <li>Where it matters, <strong>keep records</strong> so a decision can be understood later.</li>
+        <li>Be open with the team when a <strong>significant part</strong> was AI-generated or heavily assisted — it tells reviewers to look closer.</li>
+        <li>Don't hide AI involvement from clients when it <strong>materially affects</strong> what we deliver.</li>
+      </ul>
     </div>
   </section>
 
@@ -641,11 +655,13 @@
       <h2>Your setup checklist</h2>
       <ul class="checklist">
         <li><span class="box"></span><span><b>Approved AI tools on your company account</b> <small>training &amp; history off</small></span></li>
-        <li><span class="box"></span><span><b>Shared guardrails installed</b> <small>.claude deny-list + hooks, pre-commit gitleaks</small></span></li>
+        <li><span class="box"></span><span><b>Shared guardrails &amp; secret scanning enabled</b> <small>deny-lists, hooks, pre-commit checks</small></span></li>
         <li><span class="box"></span><span><b>Secret-manager access verified</b> <small>so you never hard-code or paste secrets</small></span></li>
-        <li><span class="box"></span><span><b>Project AI rules confirmed with your lead</b> <small>what's allowed, what's off-limits</small></span></li>
+        <li><span class="box"></span><span><b>Project AI rules confirmed with your lead</b> <small>what's allowed and what's off-limits</small></span></li>
+        <li><span class="box"></span><span><b>You know what counts as Restricted data here</b> <small>the project's hard no-AI boundary</small></span></li>
         <li><span class="box"></span><span><b>Security contact saved</b> <small>rotate &amp; report fast if something leaks</small></span></li>
       </ul>
+      <div class="takeaway"><b>Tip</b> Re-check this list every time you join a new project.</div>
     </div>
   </section>
 
