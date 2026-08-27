@@ -275,9 +275,22 @@
       <h2>Assess the risk first</h2>
       <p class="lede">Before we build or ship anything that uses AI, we define what harm it could cause if things go wrong. The higher the risk, the more carefully we handle it — no skipping steps under pressure.</p>
       <div class="levels">
-        <div class="level"><span class="badge lv-pub">LOW</span><p>Internal helpers, drafts, tools that don't affect clients or money.</p></div>
-        <div class="level"><span class="badge lv-con">MEDIUM</span><p>Features clients see, and that influence their decisions.</p></div>
-        <div class="level"><span class="badge lv-res">HIGH</span><p>Anything touching money, safety, legal rights, large volumes of personal data, or many people at once.</p></div>
+        <div class="level"><span class="badge lv-pub">LOW</span><p>Internal helpers, drafts, tools that don't affect clients or money.<br /><b>Examples:</b> a throwaway script, a README draft, brainstorming, renaming or formatting.</p></div>
+        <div class="level"><span class="badge lv-con">MEDIUM</span><p>Features clients see, and that influence their decisions.<br /><b>Examples:</b> customer-facing UI copy, a report a client reads, a recommendation feature.</p></div>
+        <div class="level"><span class="badge lv-res">HIGH</span><p>Anything touching money, safety, legal rights, large volumes of personal data, or many people at once.<br /><b>Examples:</b> payments, authentication, health or legal outputs, bulk PII processing.</p></div>
+      </div>
+    </div>
+  </section>
+
+  <section class="slide" data-where="Module 01 · AI at each level">
+    <div class="inner">
+      <span class="eyebrow"><span class="ln"></span> 01 · Principles</span>
+      <h2>How to use AI at each level</h2>
+      <p class="lede">Same idea as a rule of thumb: the higher the risk, the tighter the leash.</p>
+      <div class="levels">
+        <div class="level"><span class="badge lv-pub">LOW</span><p><b>Green light</b> — use AI freely. Standard review is enough; just don't paste anything sensitive.</p></div>
+        <div class="level"><span class="badge lv-con">MEDIUM</span><p><b>Use, then verify</b> — a human reviews everything before it reaches a client. Check facts, tone, and edge cases.</p></div>
+        <div class="level"><span class="badge lv-res">HIGH</span><p><b>AI assists, never decides</b> — mandatory expert review, extra testing, approved tools only. When in doubt, don't.</p></div>
       </div>
     </div>
   </section>

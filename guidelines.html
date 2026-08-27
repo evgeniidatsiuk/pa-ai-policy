@@ -290,10 +290,17 @@
   <h3>Assess the risk first</h3>
   <p>Before we build or ship anything that uses AI, we define what harm it could cause if things go wrong. The higher the risk, the more carefully we handle it — we don't skip steps just because we're under pressure.</p>
   <div class="levels">
-    <div class="level"><span class="badge lv-pub">LOW</span><p>Internal helpers, drafts, and tools that don't affect clients or money.</p></div>
-    <div class="level"><span class="badge lv-con">MEDIUM</span><p>Features clients see, and that influence their decisions.</p></div>
-    <div class="level"><span class="badge lv-res">HIGH</span><p>Anything that touches money, safety, legal rights, large volumes of personal data, or can affect many people at once.</p></div>
+    <div class="level"><span class="badge lv-pub">LOW</span><p>Internal helpers, drafts, and tools that don't affect clients or money.<br /><b>Examples:</b> a throwaway script, a README or docs draft, brainstorming, formatting or renaming.</p></div>
+    <div class="level"><span class="badge lv-con">MEDIUM</span><p>Features clients see, and that influence their decisions.<br /><b>Examples:</b> customer-facing UI copy, a report a client reads, a recommendation or suggestion feature.</p></div>
+    <div class="level"><span class="badge lv-res">HIGH</span><p>Anything that touches money, safety, legal rights, large volumes of personal data, or can affect many people at once.<br /><b>Examples:</b> payments and billing, authentication, health/legal/financial outputs, bulk processing of personal data.</p></div>
   </div>
+
+  <p>As a rule of thumb, the higher the risk, the tighter the leash:</p>
+  <ul class="clean">
+    <li><strong>Low</strong> — use AI freely; standard review is enough, and nothing sensitive gets pasted.</li>
+    <li><strong>Medium</strong> — use AI, but a human reviews everything before it reaches a client; verify facts, tone, and edge cases.</li>
+    <li><strong>High</strong> — AI assists, it never decides; mandatory expert review, extra testing, and approved tools only. When in doubt, don't.</li>
+  </ul>
 
   <h3>Rules we never bend</h3>
   <div class="principle"><div class="n">1</div><div>
