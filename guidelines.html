@@ -512,9 +512,29 @@ cmd=$(echo <span class="str">"$input"</span> | jq -r <span class="str">'.tool_in
 
 <span class="tok">exit</span> 0   <span class="cm"># allow everything else</span></code></pre>
 
+  <h3>Layer 3 — scan for secrets, at every layer</h3>
+  <p>A secret scanner reads diffs and files for high-entropy strings and known key formats (AWS, GCP, Stripe, private keys, and hundreds more) and fails when it finds one. Don't rely on a single choke point — run it wherever a secret could slip through:</p>
+  <ul class="clean">
+    <li><strong>Pre-commit</strong> — the earliest, cheapest catch. Blocks the commit on the developer's machine before a secret ever reaches history. (See the gitleaks pre-commit example in <a href="#data">Section 03</a>.)</li>
+    <li><strong>CI / server-side</strong> — a pipeline job re-scans every push and PR, so a skipped or missing local hook doesn't become a leak. Fail the build on a hit.</li>
+    <li><strong>After every AI edit</strong> — the <code>PostToolUse</code> hook above runs <code>gitleaks protect --staged</code> right after the model writes code.</li>
+    <li><strong>Full-history audit</strong> — periodically scan the entire repo history (<code>gitleaks detect</code>), not just the latest diff, to catch anything already committed.</li>
+  </ul>
+  <p>Common scanners, all open source and drop-in as a pre-commit or CI step:</p>
+  <ul class="clean">
+    <li><strong><a href="https://github.com/gitleaks/gitleaks" target="_blank" rel="noopener">gitleaks</a></strong> — fast and widely used; pre-commit, CI, and <code>protect</code> mode for staged changes. Our default.</li>
+    <li><strong><a href="https://github.com/trufflesecurity/trufflehog" target="_blank" rel="noopener">trufflehog</a></strong> — verifies found secrets against the live provider to cut false positives.</li>
+    <li><strong><a href="https://github.com/awslabs/git-secrets" target="_blank" rel="noopener">git-secrets</a></strong> — lightweight, AWS-focused; simple regex provider rules.</li>
+  </ul>
+  <div class="pre-label">Example — scan staged changes and the whole history</div>
+  <pre><code><span class="cm"># fail if a secret is staged (use in a pre-commit / PostToolUse hook)</span>
+gitleaks protect --staged --redact --no-banner
+<span class="cm"># audit everything already committed</span>
+gitleaks detect --redact --no-banner</code></pre>
+
   <div class="callout ok">
     <span class="label">Why this works</span>
-    <p>Guardrails move safety from "everyone remembers every time" to "the tool won't let you." Commit the config and hooks to the repo so every engineer — and every AI session — inherits the same rules. Keep hooks fast and fail-safe; a broken hook shouldn't block real work.</p>
+    <p>Guardrails move safety from "everyone remembers every time" to "the tool won't let you." Commit the config and hooks to the repo so every engineer — and every AI session — inherits the same rules. Keep hooks fast and fail-safe; a broken hook shouldn't block real work. And remember: a scanner catches leaks, it doesn't undo them — a caught secret that was ever real still needs rotating (<a href="#incident">Section 07</a>).</p>
   </div>
   <div class="callout warn">
     <span class="label">Caveat</span>

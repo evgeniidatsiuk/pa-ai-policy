@@ -184,6 +184,9 @@
               border-radius:999px; padding:9px 16px; background:var(--surface); }
   .takeaway b { color:var(--blue-soft); text-transform:uppercase; letter-spacing:0.1em; font-size:11px; }
 
+  /* ---------- Links ---------- */
+  a { color:var(--green); text-decoration:none; } a:hover { text-decoration:underline; }
+
   /* ---------- Video link ---------- */
   .vidlink { margin-top:24px; display:inline-flex; align-items:center; gap:9px; font-family:var(--f-mono);
              font-size:12.5px; letter-spacing:0.04em; color:var(--green); text-decoration:none;
@@ -589,6 +592,26 @@
         <div class="rstep"><span class="n">&#10003;</span><div><b>Limit outbound risk</b><p>Prevent the AI from sending sensitive data to external services unless it's explicitly allowed.</p></div></div>
       </div>
       <div class="takeaway"><b>Why</b> Safety becomes "the tool won't let you," not "everyone has to remember the rules."</div>
+    </div>
+  </section>
+
+  <section class="slide" data-where="Module 04 · Catch leaks">
+    <div class="inner">
+      <span class="eyebrow"><span class="ln"></span> 04 · Guardrails</span>
+      <h2>Catch leaks before they ship</h2>
+      <p class="lede">A secret scanner reads your diff for things that look like keys, tokens, and credentials — and stops them reaching git history. Run it at more than one layer.</p>
+      <div style="display:grid; gap:12px; margin-top:24px;">
+        <div class="rstep"><span class="n">1</span><div><b>Pre-commit</b><p>Blocks the commit locally if a secret pattern is found — the earliest, cheapest catch.</p></div></div>
+        <div class="rstep"><span class="n">2</span><div><b>CI / server-side</b><p>A pipeline job re-scans every push, so nothing slips through a skipped local hook.</p></div></div>
+        <div class="rstep"><span class="n">3</span><div><b>After every AI edit</b><p>A <code class="inline">PostToolUse</code> hook runs the scanner right after the model writes code.</p></div></div>
+      </div>
+      <div class="meta-row">
+        <span class="chip"><b>gitleaks</b></span>
+        <span class="chip">trufflehog</span>
+        <span class="chip">git-secrets</span>
+      </div>
+      <div><a class="vidlink" href="https://github.com/gitleaks/gitleaks" target="_blank" rel="noopener">&#9654; gitleaks on GitHub — install &amp; rules</a></div>
+      <div class="takeaway"><b>Leaked anyway?</b> Rotate first — see Module 06.</div>
     </div>
   </section>
 
