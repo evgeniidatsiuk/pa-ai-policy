@@ -362,15 +362,28 @@
     </div>
   </section>
 
-  <section class="slide" data-where="Module 01 · Rules 4-6">
+  <section class="slide" data-where="Module 01 · Rules 4-5">
     <div class="inner">
       <span class="eyebrow"><span class="ln"></span> 01 · Principles</span>
       <h2>Rules we never bend</h2>
       <div style="display:grid; gap:12px; margin-top:26px;">
         <div class="rstep"><span class="n">4</span><div><b>Minimum privileges for AI</b><p>Secrets and powerful capabilities are closed by default. Access is opened deliberately, temporarily, and only for the specific task. Agents and tools run with the smallest set of permissions possible.</p></div></div>
         <div class="rstep"><span class="n">5</span><div><b>The same (or higher) bar as human work</b><p>AI-produced code, text, analysis, or decisions go through the same reviews, tests, and security checks as if a person wrote them. On high risk the bar is higher — and we keep watching behaviour after release.</p></div></div>
-        <div class="rstep"><span class="n">6</span><div><b>We stay honest about AI's role</b><p>Inside the team and with clients, we say clearly where AI was used, what it did, and its known limits. Where it matters, we keep records so a decision can be understood later.</p></div></div>
       </div>
+    </div>
+  </section>
+
+  <!-- TRANSPARENCY -->
+  <section class="slide" data-where="Module 01 · Honesty about AI">
+    <div class="inner">
+      <span class="eyebrow"><span class="ln"></span> 01 · Principles</span>
+      <h2>We stay honest about AI's role</h2>
+      <ul class="list tight">
+        <li>Say clearly <strong>where AI was used, what it did, and its known limits</strong> — inside the team and with clients.</li>
+        <li>Where it matters, <strong>keep records</strong> so a decision can be understood later.</li>
+        <li>Be open with the team when a <strong>significant part</strong> was AI-generated or heavily assisted — it tells reviewers to look closer and keeps our process honest.</li>
+        <li>Don't hide AI involvement from clients when it <strong>materially affects</strong> what we deliver.</li>
+      </ul>
     </div>
   </section>
 
@@ -426,7 +439,6 @@
         <div class="tree-step"><div class="tree-q"><b>Public</b> — fine to publish (OSS, docs, marketing)?</div><span class="tree-verdict v-ok">Any approved tool</span></div>
         <div class="tree-step"><div class="tree-q"><b>Anything else</b> — internal &amp; generic</div><span class="tree-verdict v-warn">Approved business tool</span></div>
       </div>
-      <div class="callout warn"><span class="label">Today, in practice</span><p>We only have personal accounts — treat them as public tools: <strong>only Public data goes in.</strong> Anything above needs approval. When in doubt, don't.</p></div>
     </div>
   </section>
 
@@ -605,11 +617,6 @@
         <div class="rstep"><span class="n">2</span><div><b>CI / server-side</b><p>A pipeline job re-scans every push, so nothing slips through a skipped local hook.</p></div></div>
         <div class="rstep"><span class="n">3</span><div><b>After every AI edit</b><p>A <code class="inline">PostToolUse</code> hook runs the scanner right after the model writes code.</p></div></div>
       </div>
-      <div class="meta-row">
-        <span class="chip"><b>gitleaks</b></span>
-        <span class="chip">trufflehog</span>
-        <span class="chip">git-secrets</span>
-      </div>
       <div><a class="vidlink" href="https://github.com/gitleaks/gitleaks" target="_blank" rel="noopener">&#9654; gitleaks on GitHub — install &amp; rules</a></div>
       <div class="takeaway"><b>Leaked anyway?</b> Rotate first — see Module 06.</div>
     </div>
@@ -782,20 +789,6 @@
           </ul>
         </div>
       </div>
-    </div>
-  </section>
-
-  <!-- TRANSPARENCY -->
-  <section class="slide" data-where="Honesty about AI">
-    <div class="inner">
-      <span class="eyebrow"><span class="ln"></span> Honesty about AI</span>
-      <h2>We stay honest about AI's role</h2>
-      <ul class="list tight">
-        <li>Say clearly <strong>where AI was used, what it did, and its known limits</strong> — inside the team and with clients.</li>
-        <li>Where it matters, <strong>keep records</strong> so a decision can be understood later.</li>
-        <li>Be open with the team when a <strong>significant part</strong> was AI-generated or heavily assisted — it tells reviewers to look closer and keeps our process honest.</li>
-        <li>Don't hide AI involvement from clients when it <strong>materially affects</strong> what we deliver.</li>
-      </ul>
     </div>
   </section>
 
