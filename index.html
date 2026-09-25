@@ -74,8 +74,10 @@
   .chip { font-size:13px; color:var(--text-2); background:var(--surface); border:1px solid var(--border);
           border-radius:999px; padding:8px 15px; }
   .chip b { color:var(--text); }
-  a.chip { text-decoration:none; transition:border-color .15s, background .15s, color .15s; }
-  a.chip:hover { border-color:var(--green); background:rgba(1,221,154,0.14); color:var(--text); }
+  a.chip { text-decoration:none; transition:border-color .15s, background .15s, color .15s, box-shadow .15s;
+           border-color:rgba(1,221,154,0.35); background:rgba(1,221,154,0.08); color:var(--text); }
+  a.chip b { color:inherit; }
+  a.chip:hover, a.chip:focus-visible, a.chip:active { border-color:var(--green); background:rgba(1,221,154,0.14); color:var(--text); box-shadow:0 0 0 1px rgba(1,221,154,0.18) inset; }
 
   /* ---------- Module divider ---------- */
   .mod-num { font-family:var(--f-head); font-weight:500; font-size:clamp(90px,20vw,220px); line-height:.9;
@@ -620,7 +622,7 @@
         <div class="rstep"><span class="n">3</span><div><b>After every AI edit</b><p>A <code class="inline">PostToolUse</code> hook runs the scanner right after the model writes code.</p></div></div>
       </div>
       <div class="meta-row">
-        <a class="chip" href="https://github.com/gitleaks/gitleaks" target="_blank" rel="noopener"><b>gitleaks</b></a>
+        <a class="chip" href="https://github.com/gitleaks/gitleaks" target="_blank" rel="noopener">gitleaks</a>
         <a class="chip" href="https://github.com/trufflesecurity/trufflehog" target="_blank" rel="noopener">trufflehog</a>
         <a class="chip" href="https://github.com/awslabs/git-secrets" target="_blank" rel="noopener">git-secrets</a>
       </div>
