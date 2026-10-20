@@ -238,6 +238,7 @@
       <a href="#developers">Developers</a>
       <a href="#incident">Leak Runbook</a>
       <a href="#onboarding">Onboarding</a>
+      <a href="#pms">For PMs</a>
     </nav>
   </div>
 </div>
@@ -264,6 +265,7 @@
       <li><a href="#incident">Runbook: Leaked Secrets &amp; Rotation</a></li>
       <li><a href="#legal">Legal, IP &amp; Client Work</a></li>
       <li><a href="#onboarding">Onboarding Checklist</a></li>
+      <li><a href="#pms">Claude for PMs <span style="color:var(--text-3); font-weight:500;">· practice, not policy</span></a></li>
     </ol>
   </div>
 </div>
@@ -714,6 +716,148 @@ git push --force --all</code></pre>
   <div class="callout rule">
     <span class="label">The team ethos</span>
     <p>We intend to use this technology well — deliberately, securely, and to genuinely raise the quality of what we build. Use AI boldly, verify carefully, guard the data, and ask when unsure.</p>
+  </div>
+</div></section>
+
+<hr class="divider" />
+
+<!-- PM · CLAUDE FOR PMs (practice, not policy) -->
+<section id="pms"><div class="wrap">
+  <h2><span class="num">PM</span> Claude for PMs</h2>
+  <p class="section-sub"><strong>Practice, not policy.</strong> Practical approaches and cases — short notes on how Claude can be used in a manager's daily work: where it helps most often, and where it lets you down. Everything above still applies.</p>
+
+  <h3>1. What not to paste into AI</h3>
+  <p>Three unread client messages, a follow-up to send after the morning call, and the reflex to paste the company name, the amount and what was discussed into your favourite AI tool. Stop for a second and ask yourself two questions.</p>
+  <ul class="clean">
+    <li><strong>Whose data am I handing over right now?</strong> If it's my own thoughts and wording, it's safe. If it's client names, numbers or contacts, it isn't.</li>
+    <li><strong>What happens if the client accidentally sees this prompt tomorrow?</strong> If the answer is “that would be bad”, it shouldn't be shared with AI.</li>
+  </ul>
+  <div class="callout danger">
+    <span class="label">Verdict</span>
+    <p>Client names, amounts, contacts, NDA notes and anything Restricted do not go into an unapproved tool. Redaction is not a workaround.</p>
+  </div>
+
+  <h3>2. Why a skill may not work and how to avoid it</h3>
+  <div class="principle"><span class="n">1</span><div><h3>Trying to build a “universal assistant”</h3><p>One skill for everything: follow-ups, roadmaps, risk analysis, client replies and so on. Sounds convenient, but works poorly — such a skill almost never triggers correctly. Five small skills for specific, repeatable tasks beat one big skill “for every occasion”.</p></div></div>
+  <div class="principle"><span class="n">2</span><div><h3>A description that isn't clear enough</h3><p>The most common reason a “skill didn't fire”. If the trigger is written in general terms, the model simply doesn't understand when to call it.</p></div></div>
+  <div class="principle"><span class="n">3</span><div><h3>Building a skill upfront</h3><p>If the task isn't repeatable, don't create a skill right away. Start with a prompt. If it sticks and keeps repeating, then it's worth turning into a skill. Otherwise you end up with a folder nobody uses that just takes up space.</p></div></div>
+  <div class="principle"><span class="n">4</span><div><h3>Skills tend to “age”</h3><p>The process changed, but the instruction stayed the same, and the model keeps doing things “the old way”. Once a quarter, or as soon as the process changes, check whether the skill still matches reality.</p></div></div>
+  <div class="principle"><span class="n">5</span><div><h3>Skill conflicts</h3><p>They appear when there are many skills and their descriptions overlap. We write “prepare a report”, and the library has status-report, weekly-report and client-report — the model picks the wrong one. Every skill should state clearly when <em>this</em> one, and not a neighbouring one, should be invoked.</p></div></div>
+  <div class="principle"><span class="n">6</span><div><h3>The skill contradicts the project description</h3><p>The project says “write in Ukrainian, use this tone”, the skill says something completely different. What comes out isn't always obvious, and the result becomes unpredictable.</p></div></div>
+  <div class="principle"><span class="n">7</span><div><h3>Mixing up instructions and a knowledge base</h3><p>A common mistake is to put every detail of projects, clients and access into the skill. A skill is about “how to do it”, not “what to know” — don't add extra information.</p></div></div>
+  <div class="principle"><span class="n">8</span><div><h3>Confidential data inside a skill</h3><p>Don't put client names, internal links, tokens or any other confidential information into a skill. If the skill goes into the team workspace, that data travels with it. A skill is a public artifact by default.</p></div></div>
+
+  <h3>3. A skill is a feature too, and it needs testing</h3>
+  <p>Imagine a skill not as a text instruction but as a full-blown feature. Nobody ships a feature to production after one lucky click: first it gets checked on different scenarios, edge cases and real data. Treat a skill the same way — take a few real requests, the kind you actually write at work, and check whether the skill responds to them consistently. It's QA, only not for code but for an AI skill.</p>
+  <p>Why does this matter especially for a manager? A skill in the team workspace immediately starts working for everyone. If it produces a bad result, that's already the whole team's problem. Testing catches it before the team does.</p>
+  <p><strong>The loop:</strong> create the skill → test → see where it fell short → fix → test again. Take 3–5 real requests and run each one twice: with the skill and without it. Compare the results side by side, correct, and repeat until the result is stable and predictable.</p>
+  <div class="callout warn">
+    <span class="label">Important point</span>
+    <p>Not every skill needs formal evaluation. Do it when you can no longer confidently say “good / bad” by eye, or when the cost of a mistake is high. In other cases a few live checks are enough.</p>
+  </div>
+
+  <h3>4. Subagents: when one assistant becomes a team</h3>
+  <p>When a decision is complex, it's worth gathering different perspectives — that's what a skill with subagents is for. Instead of one generic answer you get several experts who each examine the same decision from their own side, then converge into a comparison matrix and a recommendation.</p>
+  <p>Why a skill rather than a prompt in your notes? Copying such a bundle every time is inconvenient; a skill triggers itself. Write “evaluate the decision” and the multi-role breakdown starts right away.</p>
+  <ul class="clean">
+    <li>Take your working prompts and ask <strong>skill-creator</strong> to assemble a skill from them — say, <code>decision-review</code>: each subagent analyses the decision from its own side, then a matrix is compiled, and at the end there's a recommendation.</li>
+    <li><strong>Roles must be interchangeable</strong> — the skill shouldn't be stitched to the same experts forever.</li>
+    <li>What matters most isn't the length of the instruction but <strong>the right description</strong> — that decides whether the subagents switch on by themselves.</li>
+    <li>The file inside the folder must be named <code>SKILL.md</code>. Otherwise the system won't see the skill, and the subagents remain just a nice idea in a folder.</li>
+  </ul>
+  <div class="callout ok">
+    <span class="label">In conclusion</span>
+    <p>Subagents give several perspectives on a decision. The skill makes sure this bundle switches on by itself whenever we're actually facing a choice.</p>
+  </div>
+
+  <h3>5. Subagent: parallel tasks</h3>
+  <p>Turning a subagent into a whole team, where one searches, another writes, and a third checks. A subagent is a separate session that the main model spins up on its own: it gets a specific task, does its part and returns the result. It's easy to confuse with a skill, but a subagent is more like a freelancer — came, did the job, left. A skill is closer to a full-time employee.</p>
+  <ul class="clean">
+    <li><strong>A subagent doesn't see the previous conversation.</strong> It starts from scratch and knows only what was passed to it, so “refine what we just discussed” almost never works. Give everything upfront: files, criteria and the expected format.</li>
+    <li><strong>It's launched with an ordinary prompt</strong> — “launch a subagent” or “launch three agents in parallel”. Before starting, the model usually shows a plan of who does what; that's where you can still adjust the breakdown.</li>
+    <li><strong>Good fit:</strong> parallel research, a fresh check of an already finished result, a breakdown of a large pack of documents, or several different roles on one task. On a short five-minute job it rather gets in the way — a subagent enters the topic from scratch every time.</li>
+  </ul>
+  <div class="callout rule">
+    <span class="label">In short</span>
+    <p>There's no point assembling a team to translate a single file.</p>
+  </div>
+
+  <h3>6. Weak spots of subagents and why you need a verifier</h3>
+  <ul class="clean">
+    <li><strong>They're expensive.</strong> Each subagent is a separate session that re-reads the files and re-enters the topic, so three agents are almost like three full conversations. Launch them only when parallel work really saves time.</li>
+    <li><strong>A subagent doesn't ask back.</strong> If something is unclear, it won't stop — it will make an assumption and keep going.</li>
+    <li><strong>Subagents don't talk to each other.</strong> Only the main model brings everything together at the end. If parts of the task need to negotiate along the way, that's sequential work, not parallel.</li>
+    <li><strong>More agents doesn't mean a better result.</strong> Every new subagent is another retelling of the context and another place where something gets lost. The sweet spot is two to four.</li>
+  </ul>
+  <p>When several agents work in parallel, it's harder to catch a mistake. This is where a <strong>verifier agent</strong> helps: one did the work, the other looks at it with fresh eyes, as if it were a colleague's draft. A model checking itself is already defending its own logic; the verifier didn't see how the answer was born, so it's more honest in its pushback. Run it before sending, after research with numbers, after several agents have worked — wherever a mistake is costly. Hallucinations most often hide in dates, prices and names.</p>
+  <p>Give it the right prompt, and don't tell it the text was written by AI — let it review it as a human's work, without leniency. Its job is to find questionable facts, gaps in logic and missed risks.</p>
+  <div class="callout ok">
+    <span class="label">In conclusion</span>
+    <p>The verifier doesn't replace managers, it only narrows the area to check. The final decision must stay with us.</p>
+  </div>
+
+  <h3>7. Google Docs templates without manual formatting</h3>
+  <p>A large part of a manager's work is documents. The same font across eight files, identical headings, tidy metadata — exactly the kind of work you can hand over to AI. But for things to look right in Google Docs, a regular chat is often not enough: you need the Google Docs API. First authorise Google Drive, then grant Claude the access it asks for.</p>
+  <ul class="clean">
+    <li>Collect the templates in a <strong>Templates</strong> folder: Communication Plan, Meeting Notes, Project Brief, Retrospective, Risk Register, Stakeholder Register, Team &amp; Roles, Weekly Status Report and whatever else the team actually uses.</li>
+    <li>Don't go into each file — ask: “go through all of them and bring them to one look”. For example: Open Sans everywhere; document title large and green; section headings a bit smaller, also accented; date, time and participants lighter and in italics.</li>
+    <li>Add one more request, without which the AI may get confused: <strong>“process the files one at a time and write down what's already done”</strong>.</li>
+  </ul>
+  <div class="callout warn">
+    <span class="label">What won't work</span>
+    <p>Dropdowns for status or priority and a date picker — the model won't place those properly. The structure and style of templates can be assembled quickly; small interactive bits inside the document still have to be finished by hand.</p>
+  </div>
+
+  <h3>8. Excalidraw + Claude: hand-drawn diagrams in minutes</h3>
+  <p>The team needs a new process explained quickly. You can write a long message, or spend half an hour aligning blocks in Miro — or use Excalidraw: a digital whiteboard where everything looks hand-drawn. Just blocks, arrows and text; the team sees the picture right away instead of a wall of text, and it needs no learning.</p>
+  <p>It's especially handy when the case is complex and unusual: draw the main path, then add the “what if…” forks together with the team — on a diagram they become visible much faster than in text. It works just as well for architecture, dependencies between tasks or team structure.</p>
+  <p>You don't draw everything by hand — ask AI to draw your thoughts right inside Claude, with Excalidraw connected via a connector. There's no universal prompt: each time, spell out what exactly you're drawing (a process, a roadmap, team structure, a flow), which blocks or steps should be there, how they're connected, and how detailed it should be. The diagram isn't a static image — edit it by hand, or ask AI to look again and analyse exactly the points that matter.</p>
+  <div class="callout ok">
+    <span class="label">Why it works</span>
+    <p>You get the result fast, so you can both explain and immediately see the weak spots.</p>
+  </div>
+
+  <h3>9. Design review with Claude</h3>
+  <p>Set up the Figma connector as usual: find Figma in the connector settings, log in and restart the session. The manager's job is to check the completeness of the screens and their compliance. After the review, three things should be clear: does the mockup solve the task we set, is everything development needs drawn, and has anything extra appeared that has neither an agreement nor a budget?</p>
+  <div class="grid g2">
+    <div class="card"><span class="kicker">First priority</span><h3>Problem</h3><p>Does the mockup solve the user's problem at all?</p></div>
+    <div class="card"><span class="kicker">Scope</span><h3>Screens &amp; scenarios</h3><p>Are all screens and scenarios in place, and has nothing extra been drawn?</p></div>
+    <div class="card"><span class="kicker">States &amp; data</span><h3>Edge cases</h3><p>Empty screen, loading, error, long text, zero items and ten thousand items.</p></div>
+    <div class="card"><span class="kicker">Consistency</span><h3>Design system</h3><p>Tokens instead of “freehand” colours, components from the library, identical spacing.</p></div>
+  </div>
+  <div class="callout warn">
+    <span class="label">Where AI can't manage without us</span>
+    <p>AI can't fully close the first two tasks — it doesn't know the requirements until we give them. But states and systematic issues it often catches faster than a human: the eye easily misses the difference between 16 and 18 pixels; the model doesn't.</p>
+  </div>
+  <h4>Giving it Figma links</h4>
+  <ul class="clean">
+    <li><strong>The page URL</strong> — to see the whole picture: how many screens, how they're grouped.</li>
+    <li><strong>A link to a specific frame</strong> — when you need to review states, texts, spacing, consistency.</li>
+  </ul>
+  <p>AI can see and analyse screens, layer structure, tokens, library components, comments, sometimes even animations and FigJam. A prototype also works, with limitations: AI clicks on the image, sometimes misses, ends the session quickly on a long flow, and can't tell a prototype bug from intent. It won't feel that a screen is overloaded, but it also won't get lost where a real person would.</p>
+  <h4>Combine several checks</h4>
+  <ul class="clean">
+    <li>Compare the screens against the spec: what's not covered, what's extra, where they diverge.</li>
+    <li>Separately go through states and edge cases.</li>
+    <li>Separately check whether the screens “live” by the design system.</li>
+    <li>Only then turn this — not into complaints, but into questions for the designer.</li>
+  </ul>
+  <div class="callout rule">
+    <span class="label">Checklist before handoff to development</span>
+    <p>Run a short check with AI: are all states there, are the texts final, are icons and logos in place, are layers named the way they should be.</p>
+  </div>
+  <h4>Where Claude gets it wrong</h4>
+  <ul class="clean">
+    <li><strong>It invents components</strong> — “there should be a Button/Primary here”, although the library has no such thing. Check the name before passing it on.</li>
+    <li><strong>Hidden layers</strong> — the state is drawn but sits under another frame; AI doesn't see it and says it's missing. Double-check before raising it.</li>
+    <li><strong>Large files</strong> — it may review 6 screens out of 20 and not mention it. Work in chunks and ask at the start: “how many screens did you actually see?”</li>
+    <li><strong>Generic UX advice</strong> — “add more white space”. Ignore it, or ask for specifics.</li>
+    <li><strong>A confident tone on assumptions</strong> — “email validation is missing”, when it may simply not have found it. Require it to mark such things as an “assumption”.</li>
+    <li><strong>It doesn't know your users and backend</strong> — it judges UX by general patterns and may fail to say “we simply don't have this data”. In prototypes, a non-clickable button could be a bug or intentional; it can't tell the difference.</li>
+  </ul>
+  <div class="callout ok">
+    <span class="label">In conclusion</span>
+    <p>An AI review is a draft that the manager checks and signs off — it shouldn't be forwarded to the designer without a look.</p>
   </div>
 </div></section>
 
